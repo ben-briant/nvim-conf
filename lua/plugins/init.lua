@@ -57,13 +57,11 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/nvim-cmp",
 			"L3MON4D3/LuaSnip",
+			"simrat39/rust-tools.nvim",
 		},
 		config = function()
 			local lsp_zero = require("lsp-zero")
-
 			lsp_zero.on_attach(function(client, bufnr)
-				-- see :help lsp-zero-keybindings
-				-- to learn the available actions
 				lsp_zero.default_keymaps({ buffer = bufnr })
 			end)
 
@@ -78,7 +76,20 @@ return {
 				},
 			})
 
-			require("lspconfig").clangd.setup({})
+			local lspconfig = require("lspconfig")
+			lspconfig.clangd.setup({})
+			-- lspconfig.rust_analyzer.setup({})
+
+			-- configure rust separately, with fanciness
+			local rt = require("rust-tools")
+			rt.setup({
+				server = {
+					-- TODO: there's gotta be a way to make this automatic
+					on_attach = function(_, bufnr)
+						lsp_zero.default_keymaps({ buffer = bufnr })
+					end,
+				},
+			})
 		end,
 	},
 
