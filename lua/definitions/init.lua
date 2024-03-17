@@ -11,4 +11,3 @@ vim.g.signcolumn = "number"
 -- smart casing for search
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-

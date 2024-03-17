@@ -1,10 +1,10 @@
 -- Functional wrapper for mapping custom keybindings
 function map(mode, lhs, rhs, opts)
-    local options = { noremap = true }
-    if opts then
-        options = vim.tbl_extend("force", options, opts)
-    end
-    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+	local options = { noremap = true }
+	if opts then
+		options = vim.tbl_extend("force", options, opts)
+	end
+	vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
 return {
@@ -22,7 +22,7 @@ return {
 		},
 		config = function()
 			map("n", "<C-b>", "<cmd>:Neotree toggle<cr>")
-		end
+		end,
 	},
 
 	-- Theme
@@ -38,13 +38,13 @@ return {
 
 	-- bracket closer
 	{
-		'windwp/nvim-autopairs',
+		"windwp/nvim-autopairs",
 		event = "InsertEnter",
-		config = true
+		config = true,
 		-- use opts = {} for passing setup options
 		-- this is equalent to setup({}) function
 	},
-	
+
 	-- indentation based on current file
 	"tpope/vim-sleuth",
 
@@ -59,27 +59,27 @@ return {
 			"L3MON4D3/LuaSnip",
 		},
 		config = function()
-			local lsp_zero = require('lsp-zero')
+			local lsp_zero = require("lsp-zero")
 
 			lsp_zero.on_attach(function(client, bufnr)
 				-- see :help lsp-zero-keybindings
 				-- to learn the available actions
-				lsp_zero.default_keymaps({buffer = bufnr})
+				lsp_zero.default_keymaps({ buffer = bufnr })
 			end)
 
-			local cmp = require('cmp')
+			local cmp = require("cmp")
 			cmp.setup({
 				mapping = {
-					['<CR>'] = cmp.mapping.confirm({ select = false }),
+					["<CR>"] = cmp.mapping.confirm({ select = false }),
 				},
 				window = {
 					completion = cmp.config.window.bordered(),
 					documentation = cmp.config.window.bordered(),
-				}
+				},
 			})
 
-			require('lspconfig').clangd.setup({})
-		end
+			require("lspconfig").clangd.setup({})
+		end,
 	},
 
 	{
@@ -87,7 +87,7 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			local conform = require("conform")
-			
+
 			conform.setup({
 				formatters_by_ft = {
 					javascript = { "prettier" },
@@ -118,65 +118,64 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		dependencies = {
-			"nvim-lua/plenary.nvim"
+			"nvim-lua/plenary.nvim",
 		},
 		config = function()
 			-- Activate telescope, and set :q to close it
-			local actions = require('telescope.actions')
-			local telescope = require('telescope')
-			
+			local actions = require("telescope.actions")
+			local telescope = require("telescope")
+
 			local opts = {
-			  defaults = {
-			    prompt_prefix = "   ",
-			    selection_caret = "  ",
-			    entry_prefix = "  ",
-			    initial_mode = "insert",
-			    layout_config = {
-			      horizontal = {
-			        prompt_position = "top",
-			        preview_width = 0.55,
-			        results_width = 0.8,
-			      },
-			      vertical = {
-			        mirror = false,
-			      },
-			      width = 0.87,
-			      height = 0.80,
-			      preview_cutoff = 120,
-			    },
-			    winblend = 0,
-			    -- border = {},
-			    -- borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-			    color_devicons = true,
-			    set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
-			    mappings = {
-			      n = {
-			        ["q"] = actions.close
-			      },
-			    },
-			  },
+				defaults = {
+					prompt_prefix = "   ",
+					selection_caret = "  ",
+					entry_prefix = "  ",
+					initial_mode = "insert",
+					layout_config = {
+						horizontal = {
+							prompt_position = "top",
+							preview_width = 0.55,
+							results_width = 0.8,
+						},
+						vertical = {
+							mirror = false,
+						},
+						width = 0.87,
+						height = 0.80,
+						preview_cutoff = 120,
+					},
+					winblend = 0,
+					-- border = {},
+					-- borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+					color_devicons = true,
+					set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+					mappings = {
+						n = {
+							["q"] = actions.close,
+						},
+					},
+				},
 			}
-			
+
 			telescope.setup(opts)
-			
+
 			-- Map keys for telescope
-			local builtin = require('telescope.builtin')
-			
-			vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-			vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-			vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-			vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-		end
+			local builtin = require("telescope.builtin")
+
+			vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
+			vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
+			vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
+			vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
+		end,
 	},
 
 	-- tmux integration
 	"christoomey/vim-tmux-navigator",
 
 	{
-		'nvim-telescope/telescope.nvim',
+		"nvim-telescope/telescope.nvim",
 		dependencies = {
-			'nvim-lua/plenary.nvim'
-		}
-	}
-
+			"nvim-lua/plenary.nvim",
+		},
+	},
 }
