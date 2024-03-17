@@ -1,5 +1,7 @@
--- set leader to space
-vim.g.mapleader = "<Space>"
+-- vim-style variable definitions
+require("definitions")
+-- plugin-agnostic remappings
+require("remaps")
 
 -- lazy.nvim install
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
