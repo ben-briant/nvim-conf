@@ -48,6 +48,21 @@ return {
 	-- indentation based on current file
 	"tpope/vim-sleuth",
 
+	-- treesitter
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		config = function()
+			local configs = require("nvim-treesitter.configs")
+
+			configs.setup({
+				ensure_installed = { "c", "cpp", "lua", "vim", "vimdoc", "javascript", "html", "markdown" },
+				sync_install = false,
+				highlight = { enable = true },
+			})
+		end,
+	},
+
 	-- LSP stuff
 	{
 		"VonHeikemen/lsp-zero.nvim",
@@ -78,6 +93,7 @@ return {
 
 			local lspconfig = require("lspconfig")
 			lspconfig.clangd.setup({})
+			lspconfig.gopls.setup({})
 			-- lspconfig.rust_analyzer.setup({})
 
 			-- configure rust separately, with fanciness
@@ -116,6 +132,7 @@ return {
 					python = { "isort", "black" },
 					c = { "clang_format" },
 					cpp = { "clang_format" },
+					go = { "go-fmt" },
 				},
 				format_on_save = {
 					lsp_fallback = true,
