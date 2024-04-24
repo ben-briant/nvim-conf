@@ -78,6 +78,7 @@ return {
 			local lsp_zero = require("lsp-zero")
 			lsp_zero.on_attach(function(client, bufnr)
 				lsp_zero.default_keymaps({ buffer = bufnr })
+				map("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<cr>")
 			end)
 
 			local cmp = require("cmp")
@@ -103,9 +104,13 @@ return {
 					-- TODO: there's gotta be a way to make this automatic
 					on_attach = function(_, bufnr)
 						lsp_zero.default_keymaps({ buffer = bufnr })
+						map("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<cr>")
 					end,
 				},
 			})
+			-- Show line diagnostics automatically in hover window
+			vim.o.updatetime = 250
+			vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
 		end,
 	},
 
